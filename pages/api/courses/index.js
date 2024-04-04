@@ -15,8 +15,9 @@ const handler = async (req, res) => {
             await coursesModel.create({ title });
             return res
                 .status(201)
-                .res({ message: "course created sucessfully :))" })
+                .json({ message: "course created sucessfully :))" })
         } catch (err) {
+            console.log(err);
             return res
                 .status(500)
                 .json({ message: "Unknow Server Error" })
