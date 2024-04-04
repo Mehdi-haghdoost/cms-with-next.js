@@ -55,3 +55,9 @@ body {
     url('/public//fonts//Shabnam-Medium-FD.ttf')format('truetype'),
     url('/public//fonts//Shabnam-Medium-FD.woff')format('woff')
 }
+
+/* Swall */
+.swal-footer {
+  display: flex;
+  justify-content: center;
+}
