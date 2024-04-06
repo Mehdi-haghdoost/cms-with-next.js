@@ -3,21 +3,25 @@ import coureModel from '@/models/course';
 import connectToDB from '@/utils/db'
 import React from 'react'
 
-function index() {
+function index({ courses }) {
+
   return (
-    <Course />
+    <Course data={courses} />
   )
 }
 
 
 export async function getStaticProps(context) {
   connectToDB();
-  
+
   const courses = await coureModel.find({})
-  console.log(courses);
+
 
   return {
-    props: {}
+    props: {
+      courses: JSON.parse(JSON.stringify(courses))
+    },
+    revalidate: 60 * 60 * 12,
   }
 }
 
