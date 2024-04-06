@@ -4,8 +4,12 @@ config.autoAddCss = false;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCashRegister, faTag, faUser } from "@fortawesome/free-solid-svg-icons";
 import styles from "@/styles/Modal.module.css";
+import { useState } from "react";
 
-const EditModal = ({ hideEditModal }) => {
+const EditModal = ({ hideEditModal, updateCourseHandler }) => {
+
+    const [title, setTitle] = useState('');
+
     return (
         <div className={styles.modal_container} id="edit-modal">
             <div className={styles.modal_bg} onClick={hideEditModal}></div>
@@ -16,29 +20,14 @@ const EditModal = ({ hideEditModal }) => {
                     <div className={styles.input_field}>
                         <span><FontAwesomeIcon icon={faTag} /></span>
                         <input
-                            type="text" 
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}
+                            type="text"
                             placeholder="نام دوره"
-                            spellcheck="false"
+                            
                         />
                     </div>
-                    <div className={styles.input_field}>
-                        <span><FontAwesomeIcon icon={faCashRegister} /> </span>
-                        <input
-                            type="text" 
-                            placeholder="قیمت دوره"
-                            spellcheck="false"
-                        />
-                    </div>
-                    <div className={styles.input_field}>
-                        <span><FontAwesomeIcon icon={faUser} /></span>
-                        <input
-                            type="text" 
-                            placeholder="مدرس دوره"
-                            spellcheck="false"
-                        />
-                    </div>
-
-                    <button type="submit" className={styles.update_btn }>
+                    <button type="submit" className={styles.update_btn} onClick={(event) => updateCourseHandler(event,title)} >
                         اپدیت دوره
                     </button>
                 </form>
