@@ -2,13 +2,28 @@ import DeleteModal from "@/components/templates/index/DeleteModal";
 import EditModal from "@/components/templates/index/EditModal";
 import { useState } from "react";
 import styles from "@/styles/Course.module.css";
+import swal from "sweetalert";
 
-const CoursesItem = ({ title}) => {
+const CoursesItem = ({ title, _id }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const hideEditModal = () => setShowEditModal(false);
   const hideDeleteModal = () => setShowDeleteModal(false);
+
+  const removeCourse = async () => {
+    const res = await fetch(`/api/courses/${_id}`)
+    console.log("Response =>", res);
+
+    if (res.status === 200) {
+      swal({
+        title: 'دوره مورد نظر با موفقیت حذف شد',
+        icon: 'success',
+        buttons: 'اوکی'
+      })
+      hideDeleteModal();
+    }
+  }
 
   return (
     <>
@@ -41,7 +56,7 @@ const CoursesItem = ({ title}) => {
         </div>
       </li>
       {showEditModal && <EditModal hideEditModal={hideEditModal} />}
-      {showDeleteModal && <DeleteModal hideDeleteModal={hideDeleteModal} />}
+      {showDeleteModal && <DeleteModal hideDeleteModal={hideDeleteModal} removeCourseHandler={removeCourse} />}
     </>
   );
 };
