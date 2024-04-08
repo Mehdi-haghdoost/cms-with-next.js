@@ -5,24 +5,25 @@ import React from 'react'
 
 function index({ courses }) {
 
-  return (
-    <Course courses={courses} />
-  )
+    return (
+        <Course courses={courses} />
+    )
 }
 
 
-export async function getStaticProps(context) {
-  connectToDB();
+export async function getServerSideProps(context) {
+    connectToDB();
+    const { query } = context
+    const courses = await coureModel.find({ title: { $regex: query.q } })
 
-  const courses = await coureModel.find({})
+    console.log(courses);
 
 
-  return {
-    props: {
-      courses: JSON.parse(JSON.stringify(courses))
-    },
-    revalidate: 60 * 60 * 12,
-  }
+    return {
+        props: {
+            courses: JSON.parse(JSON.stringify(courses))
+        },
+    }
 }
 
 export default index

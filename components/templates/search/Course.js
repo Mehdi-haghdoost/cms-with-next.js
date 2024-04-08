@@ -3,7 +3,7 @@ import React from 'react'
 import styles from "@/styles/Course.module.css";
 
 
-function Course() {
+function Course({courses}) {
 
     return (
         <>
@@ -13,12 +13,12 @@ function Course() {
 
                 </div>
                 <ul className={styles.courses_list}>
-                    {/* {
-                        data.map(course => (
+                    {
+                        courses.map(course => (
                             <CoursesItem  {...course} key={course._id} />
                         ))
-                    } */}
-                    <CoursesItem title='دوره تستی' />
+                    }
+                    
 
                 </ul>
             </section>
