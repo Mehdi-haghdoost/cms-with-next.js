@@ -6,7 +6,7 @@ import React from 'react'
 function index({ courses }) {
 
   return (
-    <Course data={courses} />
+    <Course courses={courses} />
   )
 }
 

@@ -3,10 +3,22 @@ import CoursesItem from "@/components/modules/courseItem/courseItem"
 import AddCourseModal from './AddCourseModal';
 import styles from "@/styles/Course.module.css";
 
-function Course({ data }) {
+function Course({ courses }) {
+
+    const [data, setData] = useState([...courses]);
+
     const [showAddCourseModal, setShowAddCourseModal] = useState(false);
 
     const hideAddCourseModal = () => setShowAddCourseModal(false);
+
+    const getAllCourses = async () => {
+        const res = await fetch('/api/courses')
+        const allCourses = await res.json();
+        console.log(allCourses);
+        if (res.status === 200) {
+            setData(allCourses)
+        }
+    }
 
     return (
         <>
@@ -31,10 +43,10 @@ function Course({ data }) {
             </section>
 
             {showAddCourseModal && (
-                <AddCourseModal hideAddCourseModal={hideAddCourseModal} />
+                <AddCourseModal hideAddCourseModal={hideAddCourseModal} getAllCourses={getAllCourses} />
             )}
         </>
     )
 }
 
-export default Course
+export default Course;

@@ -4,7 +4,12 @@ import coursesModel from "@/models/course"
 const handler = async (req, res) => {
     connectToDB();
 
-    if (req.method === "POST") {
+    if (req.method === 'GET') {
+        
+        const courses = await coursesModel.find({});
+        return res.json(courses);
+
+    } else if (req.method === "POST") {
         try {
             const { title } = req.body;
             if (!title.trim() || title.length < 8) {
@@ -23,6 +28,8 @@ const handler = async (req, res) => {
                 .json({ message: "Unknow Server Error" })
         }
     }
+
+
 }
 
 export default handler; 

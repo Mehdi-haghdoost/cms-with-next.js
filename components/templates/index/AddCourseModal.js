@@ -7,7 +7,7 @@ import styles from "@/styles/Modal.module.css";
 import { useState } from "react";
 import swal from "sweetalert";
 
-const AddCourseModal = ({ hideAddCourseModal }) => {
+const AddCourseModal = ({ hideAddCourseModal, getAllCourses }) => {
 
     const [title, setTitle] = useState('')
 
@@ -23,11 +23,8 @@ const AddCourseModal = ({ hideAddCourseModal }) => {
         });
         const data = await res.json()
 
-        console.log("Response =>", res);
-        console.log("data =>", data);
-
-
         if (res.status === 201) {
+            getAllCourses()
             swal({
                 title: 'دوره با موفقیت ایجاد شد',
                 icon: 'success',
@@ -57,7 +54,7 @@ const AddCourseModal = ({ hideAddCourseModal }) => {
                     </div>
 
 
-                    <button type="submit" className={styles.update_btn}>
+                    <button type="submit" className={styles.update_btn} onClick={getAllCourses} >
                         ایجاد دوره
                     </button>
                 </form>
