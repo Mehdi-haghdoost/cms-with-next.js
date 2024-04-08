@@ -5,9 +5,14 @@ const handler = async (req, res) => {
     connectToDB();
 
     if (req.method === 'GET') {
-        
-        const courses = await coursesModel.find({});
-        return res.json(courses);
+        const { q } = req.query;
+        if (req.query.q) {
+            const courses = await coursesModel.find({ title: { $regex: q } })
+            return res.json(courses)
+        } else {
+            const courses = await coursesModel.find({});
+            return res.json(courses);
+        }
 
     } else if (req.method === "POST") {
         try {
