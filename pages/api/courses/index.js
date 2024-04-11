@@ -15,24 +15,21 @@ const handler = async (req, res) => {
         }
 
     } else if (req.method === "POST") {
-        try {
-            const { title } = req.body;
-            if (!title.trim() || title.length < 8) {
-                return res
-                    .status(422)
-                    .json({ message: "title is not valid !!" })
-            }
-            await coursesModel.create({ title,price });
-            return res
-                .status(201)
-                .json({ message: "course created sucessfully :))" })
-        } catch (err) {
-            console.log(err);
-            return res
-                .status(500)
-                .json({ message: "Unknow Server Error" })
-        }
+    try {
+      const { title, price, teacher } = req.body;
+      if (!title.trim() || title.length < 4) {
+        return res.status(422).json({ message: "Title is not valid !!" });
+      }
+      await coursesModel.create({ title, price, teacher });
+      return res
+        .status(201)
+        .json({ message: "Course created successfully :))" });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ message: "UnKnown internal server error !!" });
     }
+  }
 
 
 }
