@@ -22,7 +22,7 @@ const handler = async (req, res) => {
                     .status(422)
                     .json({ message: "title is not valid !!" })
             }
-            await coursesModel.create({ title });
+            await coursesModel.create({ title,price });
             return res
                 .status(201)
                 .json({ message: "course created sucessfully :))" })
