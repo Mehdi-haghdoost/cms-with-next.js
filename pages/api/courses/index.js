@@ -10,7 +10,7 @@ const handler = async (req, res) => {
             const courses = await coursesModel.find({ title: { $regex: q } })
             return res.json(courses)
         } else {
-            const courses = await coursesModel.find({}).populate("teacher");
+            const courses = await coursesModel.find({},"-__v -updatedAt").populate("teacher","name");
             return res.json(courses);
         }
 
