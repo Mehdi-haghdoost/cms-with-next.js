@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const teacherModel = require("@/models/teacher");
 
 const schema = mongoose.Schema({
     title: {
