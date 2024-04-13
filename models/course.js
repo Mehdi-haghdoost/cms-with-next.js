@@ -27,5 +27,11 @@ const schema = mongoose.Schema({
     }
 )
 
+schema.virtual("comments",{
+    ref : "Comment",
+    localField : '_id',
+    foreignField : 'course'
+});
+
 const model = mongoose.models.Course || mongoose.model("Course", schema)
 export default model;
