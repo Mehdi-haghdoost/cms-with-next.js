@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {schema : teacherSchema} = require("@/models/teacher");
+const { schema: teacherSchema } = require("@/models/teacher");
 
 const schema = mongoose.Schema({
     title: {
@@ -18,7 +18,7 @@ const schema = mongoose.Schema({
         max: 50000,
     },
     teacher: {
-        type : teacherSchema,
+        type: teacherSchema,
         required: true,
     },
 },
@@ -27,10 +27,10 @@ const schema = mongoose.Schema({
     }
 )
 
-schema.virtual("comments",{
-    ref : "Comment",
-    localField : '_id',
-    foreignField : 'course'
+schema.virtual("comments", {
+    ref: "Comment",
+    localField: '_id',
+    foreignField: 'course'
 });
 
 const model = mongoose.models.Course || mongoose.model("Course", schema)

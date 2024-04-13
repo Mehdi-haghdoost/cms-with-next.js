@@ -1,6 +1,7 @@
 import connectToDB from "@/utils/db"
 import coursesModel from "@/models/course"
 import teachersModel from '@/models/teacher'
+import courseValidator from "@/validators/course"
 
 const handler = async (req, res) => {
   connectToDB();
@@ -16,6 +17,12 @@ const handler = async (req, res) => {
     }
 
   } else if (req.method === "POST") {
+
+    const validateResult = courseValidator(req.body)
+    if (validateResult !== true) {
+      return res.status(422).json(validateResult)
+    }
+
     try {
       const { title, price, teacher } = req.body;
 
