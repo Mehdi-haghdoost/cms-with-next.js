@@ -44,10 +44,17 @@ const handler = async (req, res) => {
                 .status(422)
                 .json({ message: "course Id is not valid :))" })
         }
+    } else if (req.method === 'GET') {
+
+        const { id } = req.query;
+
+        const course = await coursesModel
+        .findOne({ _id: id })
+        .populate("comments")
+        .lean();
+
+         res.json(course);
     }
-
-
-
 };
 
 export default handler;
