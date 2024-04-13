@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const teacherModel = require("@/models/teacher");
+const {schema : teacherSchema} = require("@/models/teacher");
 
 const schema = mongoose.Schema({
     title: {
@@ -18,8 +18,7 @@ const schema = mongoose.Schema({
         max: 50000,
     },
     teacher: {
-        type: mongoose.Types.ObjectId,
-        ref: "Teacher",
+        type : teacherSchema,
         required: true,
     },
 },

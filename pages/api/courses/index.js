@@ -1,26 +1,32 @@
 import connectToDB from "@/utils/db"
 import coursesModel from "@/models/course"
+import teachersModel from '@/models/teacher'
 
 const handler = async (req, res) => {
-    connectToDB();
+  connectToDB();
 
-    if (req.method === 'GET') {
-        const { q } = req.query;
-        if (req.query.q) {
-            const courses = await coursesModel.find({ title: { $regex: q } })
-            return res.json(courses)
-        } else {
-            const courses = await coursesModel.find({},"-__v -updatedAt").populate("teacher","name");
-            return res.json(courses);
-        }
+  if (req.method === 'GET') {
+    const { q } = req.query;
+    if (req.query.q) {
+      const courses = await coursesModel.find({ title: { $regex: q } })
+      return res.json(courses)
+    } else {
+      const courses = await coursesModel.find({}, "-__v -updatedAt").populate("teacher", "name");
+      return res.json(courses);
+    }
 
-    } else if (req.method === "POST") {
+  } else if (req.method === "POST") {
     try {
       const { title, price, teacher } = req.body;
+
+      console.log(req.body);
+
       if (!title.trim() || title.length < 4) {
         return res.status(422).json({ message: "Title is not valid !!" });
       }
-      await coursesModel.create({ title, price, teacher });
+
+      const mainTeacher = await teachersModel.findOne({ _id: teacher })
+      await coursesModel.create({ title, price, teacher: mainTeacher });
       return res
         .status(201)
         .json({ message: "Course created successfully :))" });
